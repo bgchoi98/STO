@@ -7,7 +7,8 @@ services:
       - "6379:6379"
     volumes:
       - /etc/localtime:/etc/localtime:ro
-      - /etc/timezone:/etc/timezone:ro
+    environment:
+      TZ: Asia/Seoul
     deploy:
       resources:
         limits:
@@ -23,8 +24,8 @@ services:
     volumes:
       - /srv/stone/app/files:/app/files
       - /etc/localtime:/etc/localtime:ro
-      - /etc/timezone:/etc/timezone:ro
     environment:
+      TZ: Asia/Seoul
       SPRING_PROFILES_ACTIVE: docker
       JAVA_TOOL_OPTIONS: -Duser.timezone=Asia/Seoul
       POSTGRES_DB: ${POSTGRES_DB}
@@ -56,8 +57,8 @@ services:
       - "8081:8081"
     volumes:
       - /etc/localtime:/etc/localtime:ro
-      - /etc/timezone:/etc/timezone:ro
     environment:
+      TZ: Asia/Seoul
       SPRING_PROFILES_ACTIVE: docker
       JAVA_TOOL_OPTIONS: -Duser.timezone=Asia/Seoul
       POSTGRES_DB: ${POSTGRES_DB}
@@ -82,8 +83,8 @@ services:
     restart: always
     volumes:
       - /etc/localtime:/etc/localtime:ro
-      - /etc/timezone:/etc/timezone:ro
     environment:
+      TZ: Asia/Seoul
       SPRING_PROFILES_ACTIVE: docker
       JAVA_TOOL_OPTIONS: -Duser.timezone=Asia/Seoul
       POSTGRES_DB: ${POSTGRES_DB}
@@ -110,6 +111,7 @@ services:
       - "80:80"
     volumes:
       - /etc/localtime:/etc/localtime:ro
-      - /etc/timezone:/etc/timezone:ro
+    environment:
+      TZ: Asia/Seoul
     depends_on:
       - main
