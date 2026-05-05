@@ -9,6 +9,8 @@ public interface OrderService {
     // Phase 1: 검증 + 잔고 차감 + 주문 저장 → 커밋
     MatchOrderRequestDto validateAndSaveOrder(Long tokenId, OrderRequestDto dto);
 
+    MatchOrderRequestDto validateAndSaveDemoOrder(Long tokenId, Long memberId, OrderRequestDto dto);
+
     // Phase 2: 체결 결과 반영 + 이벤트 발행 → 커밋
     void processMatchResult(Long orderId, Long tokenId, MatchResultDto matchResult);
 
