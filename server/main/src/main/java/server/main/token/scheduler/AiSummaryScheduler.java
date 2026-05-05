@@ -26,7 +26,7 @@ public class AiSummaryScheduler {
 //        updateAllAiSummaries();
 //    }
 
-    @Scheduled(cron = "0 0 0/6 * * *")
+    @Scheduled(cron = "0 5 9 * * *")
     public void updateAllAiSummaries() {
         List<Token> tokens = tokenRepository.findAllTokensWithAsset();
 

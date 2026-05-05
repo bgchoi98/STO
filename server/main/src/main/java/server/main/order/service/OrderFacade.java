@@ -28,6 +28,15 @@ public class OrderFacade {
 
     public void createOrder(Long tokenId, OrderRequestDto dto) {
         MatchOrderRequestDto matchDto = orderService.validateAndSaveOrder(tokenId, dto);
+        createMatchedOrder(tokenId, matchDto);
+    }
+
+    public void createDemoOrder(Long tokenId, Long memberId, OrderRequestDto dto) {
+        MatchOrderRequestDto matchDto = orderService.validateAndSaveDemoOrder(tokenId, memberId, dto);
+        createMatchedOrder(tokenId, matchDto);
+    }
+
+    private void createMatchedOrder(Long tokenId, MatchOrderRequestDto matchDto) {
 
         MatchResultDto matchResult;
         try {

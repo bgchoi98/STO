@@ -220,7 +220,21 @@ public class OrderServiceImpl implements OrderService {
     public MatchOrderRequestDto validateAndSaveOrder(Long tokenId, OrderRequestDto dto) {
         CustomUserPrincipal principal = (CustomUserPrincipal) SecurityContextHolder.getContext().getAuthentication()
                 .getPrincipal();
-        Long memberId = principal.getId();
+        return validateAndSaveOrder(tokenId, principal.getId(), dto, true);
+    }
+
+    @Transactional
+    @Override
+    public MatchOrderRequestDto validateAndSaveDemoOrder(Long tokenId, Long memberId, OrderRequestDto dto) {
+        return validateAndSaveOrder(tokenId, memberId, dto, false);
+    }
+
+    private MatchOrderRequestDto validateAndSaveOrder(
+            Long tokenId,
+            Long memberId,
+            OrderRequestDto dto,
+            boolean requireAccountPassword
+    ) {
         Member findMember = memberRepository.findById(memberId)
                 .orElseThrow(() -> new BusinessException(ENTITY_NOT_FOUNT_ERROR));
         Token findToken = tokenRepository.findById(tokenId)
@@ -245,7 +259,9 @@ public class OrderServiceImpl implements OrderService {
 
             Account findMemberAccount = accountRepository.findWithLockByMember(findMember)
                     .orElseThrow(() -> new BusinessException(ENTITY_NOT_FOUNT_ERROR));
-            validateAccountPassword(findMemberAccount, dto.getAccountPassword());
+            if (requireAccountPassword) {
+                validateAccountPassword(findMemberAccount, dto.getAccountPassword());
+            }
 
             double chargeRate = getChargeRate();
 
@@ -263,7 +279,9 @@ public class OrderServiceImpl implements OrderService {
         if (OrderType.SELL.equals(dto.getOrderType())) {
             Account findMemberAccount = accountRepository.findWithLockByMember(findMember)
                     .orElseThrow(() -> new BusinessException(ENTITY_NOT_FOUNT_ERROR));
-            validateAccountPassword(findMemberAccount, dto.getAccountPassword());
+            if (requireAccountPassword) {
+                validateAccountPassword(findMemberAccount, dto.getAccountPassword());
+            }
 
             MemberTokenHolding findMemberHolding = memberTokenHoldingRepository
                     .findWithLockByMemberAndToken(findMember, findToken)
