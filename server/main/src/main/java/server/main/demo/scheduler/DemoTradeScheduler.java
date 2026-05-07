@@ -23,7 +23,7 @@ public class DemoTradeScheduler {
         log.info("[DemoTradeScheduler] registered. enabled={}", properties.isEnabled());
     }
 
-    @Scheduled(cron = "0 10 9,10,12,14,15 * * *")
+    @Scheduled(cron = "0 10 9,10,12,14,15 * * *", zone = "Asia/Seoul")
     public void createDemoTrades() {
         if (!properties.isEnabled()) {
             log.info("[DemoTradeScheduler] skipped. enabled=false");

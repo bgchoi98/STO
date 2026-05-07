@@ -226,7 +226,7 @@ public class CandleLiveManager {
         messagingTemplate.convertAndSend("/topic/candle/live/" + tokenId + "/" + type.name(), dto);
     }
 
-    @Scheduled(cron = "0 * * * * *")  // 매 분 0초
+    @Scheduled(cron = "0 * * * * *", zone = "Asia/Seoul")  // 매 분 0초
     public void flushExpiredCandles() {
         LocalDateTime now = LocalDateTime.now();
 

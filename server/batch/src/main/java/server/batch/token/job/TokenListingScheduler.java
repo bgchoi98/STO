@@ -23,7 +23,7 @@ public class TokenListingScheduler {
     @Qualifier("tokenListingOpenJob")
     private final Job tokenListingOpenJob;
 
-    @Scheduled(cron = "0 0 9 * * *")
+    @Scheduled(cron = "0 0 9 * * *", zone = "Asia/Seoul")
     public void runTokenListingOpenJob() throws Exception {
         JobParameters jobParameters = new JobParametersBuilder()
                 .addLong("currentTime", System.currentTimeMillis())
