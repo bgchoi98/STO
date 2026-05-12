@@ -1,0 +1,87 @@
+<svg width="1000" height="640" viewBox="0 0 1000 640" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <style>
+      .title { font: 700 24px Arial, sans-serif; fill: #111827; }
+      .subtitle { font: 400 13px Arial, sans-serif; fill: #6B7280; }
+      .label { font: 700 16px Arial, sans-serif; fill: #111827; }
+      .body { font: 400 13px Arial, sans-serif; fill: #374151; }
+      .small { font: 400 12px Arial, sans-serif; fill: #6B7280; }
+      .client { fill: #FFFFFF; stroke: #D1D5DB; stroke-width: 2; }
+      .infra { fill: #EFF6FF; stroke: #93C5FD; stroke-width: 2; }
+      .service { fill: #F8FAFC; stroke: #94A3B8; stroke-width: 2; }
+      .storage { fill: #F0FDF4; stroke: #86EFAC; stroke-width: 2; }
+      .chain { fill: #FEF3C7; stroke: #FCD34D; stroke-width: 2; }
+      .group { fill: #FFFFFF; stroke: #E5E7EB; stroke-width: 1.5; stroke-dasharray: 6 6; }
+      .arrow { stroke: #4B5563; stroke-width: 2; marker-end: url(#arrowhead); }
+      .line { stroke: #4B5563; stroke-width: 2; }
+      .dashed { stroke: #6B7280; stroke-width: 2; stroke-dasharray: 6 6; marker-end: url(#arrowhead); }
+    </style>
+    <marker id="arrowhead" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="#4B5563" />
+    </marker>
+  </defs>
+
+  <rect width="1000" height="640" fill="#F9FAFB" />
+
+  <text x="48" y="48" class="title">STO Platform Architecture</text>
+  <text x="48" y="72" class="subtitle">Main / Match / Batch 책임 분리와 Outbox 기반 온체인 기록 흐름</text>
+
+  <rect x="350" y="105" width="300" height="66" rx="12" class="client" />
+  <text x="500" y="132" text-anchor="middle" class="label">Client</text>
+  <text x="500" y="154" text-anchor="middle" class="body">React SPA · REST API · WebSocket</text>
+
+  <rect x="350" y="215" width="300" height="66" rx="12" class="infra" />
+  <text x="500" y="242" text-anchor="middle" class="label">Nginx</text>
+  <text x="500" y="264" text-anchor="middle" class="body">Static Serving · Reverse Proxy</text>
+
+  <rect x="36" y="325" width="928" height="160" rx="16" class="group" />
+  <text x="58" y="352" class="small">Service Layer</text>
+
+  <rect x="70" y="375" width="250" height="86" rx="12" class="service" />
+  <text x="195" y="404" text-anchor="middle" class="label">Main Server</text>
+  <text x="195" y="428" text-anchor="middle" class="body">인증 · 주문 · 자산 · 공시</text>
+  <text x="195" y="449" text-anchor="middle" class="body">컨트랙트 배포</text>
+
+  <rect x="375" y="375" width="250" height="86" rx="12" class="service" />
+  <text x="500" y="404" text-anchor="middle" class="label">Match Server</text>
+  <text x="500" y="428" text-anchor="middle" class="body">주문 매칭 · 체결 처리</text>
+  <text x="500" y="449" text-anchor="middle" class="body">호가/체결 이벤트 발행</text>
+
+  <rect x="680" y="375" width="250" height="86" rx="12" class="service" />
+  <text x="805" y="404" text-anchor="middle" class="label">Batch Server</text>
+  <text x="805" y="428" text-anchor="middle" class="body">Spring Batch · Scheduler</text>
+  <text x="805" y="449" text-anchor="middle" class="body">정산 · 집계 · 큐 처리</text>
+
+  <rect x="185" y="535" width="210" height="64" rx="12" class="infra" />
+  <text x="290" y="562" text-anchor="middle" class="label">Redis</text>
+  <text x="290" y="584" text-anchor="middle" class="body">Pub/Sub · Cache</text>
+
+  <rect x="440" y="535" width="210" height="64" rx="12" class="storage" />
+  <text x="545" y="562" text-anchor="middle" class="label">PostgreSQL</text>
+  <text x="545" y="584" text-anchor="middle" class="body">Outbox · Trade · Domain Data</text>
+
+  <rect x="695" y="535" width="210" height="64" rx="12" class="chain" />
+  <text x="800" y="562" text-anchor="middle" class="label">Ethereum</text>
+  <text x="800" y="584" text-anchor="middle" class="body">Smart Contract</text>
+
+  <line x1="500" y1="171" x2="500" y2="215" class="arrow" />
+  <line x1="500" y1="281" x2="500" y2="325" class="arrow" />
+
+  <path d="M500 325 V340 H195 V375" class="arrow" />
+  <path d="M500 325 V375" class="arrow" />
+  <path d="M500 325 V340 H805 V375" class="arrow" />
+  <text x="822" y="346" class="small">background worker</text>
+
+  <path d="M195 461 V505 H290 V535" class="arrow" />
+  <path d="M500 461 V505 H290 V535" class="arrow" />
+
+  <path d="M195 461 V515 H545 V535" class="arrow" />
+  <path d="M500 461 V515 H545 V535" class="arrow" />
+  <path d="M805 461 V515 H545 V535" class="arrow" />
+
+  <path d="M195 461 V492 H800 V535" class="dashed" />
+  <text x="642" y="489" class="small">deploy contract</text>
+
+  <path d="M805 461 V535" class="dashed" />
+  <text x="818" y="506" class="small">record trade</text>
+</svg>
